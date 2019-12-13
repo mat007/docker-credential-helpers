@@ -19,7 +19,7 @@ osxkeychain:
 osxcodesign: osxkeychain
 	$(eval SIGNINGHASH = $(shell security find-identity -v -p codesigning | grep "Developer ID Application: Docker Inc" | cut -d ' ' -f 4))
 	xcrun -log codesign -s $(SIGNINGHASH) --force --verbose bin/docker-credential-osxkeychain
-	xcrun codesign --verify --deep --strict --verbose=2 --display bin/docker-credential-osxkeychain
+	xcrun codesign --verify --deep --strict --verbose=2 --display -o runtime --entitlements osxkeychain/entitlements.xml bin/docker-credential-osxkeychain
 
 secretservice:
 	mkdir -p bin
